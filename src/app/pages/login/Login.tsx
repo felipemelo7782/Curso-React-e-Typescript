@@ -3,43 +3,27 @@
 //history.push('/pagina')
 //import { useNavigate } from "react-router-dom";// versão 6 ou superior
 
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 
 export const Login = () => {
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
 
-    useEffect(()=>{
-        if(window.confirm('Voce é homem?')){
-            console.log('homem')
-        }else{
-            console.log('mulher')
-        }
-    },[]);
-
-    // Exibe os valores de email e senha sempre que mudarem
-    useEffect(() => {
-        console.log("Email atualizado:", email);
-    }, [email]);
-    // Exibe os valores de email e senha sempre que mudarem
-    useEffect(() => {
-        console.log("Senha atualizada:", password);
-    }, [password]);
-
+    const emailLength = useMemo(() => {
+        console.log('executou')
+        return email.length *1000;
+    },[email.length]);
+    
     // Lógica de clique no botão "Entrar"
     const handleEntrar = () => {
-        if (!email || !password) {
-            alert("Por favor, preencha todos os campos!");
-            return;
-        }
-        console.log("Email:", email);
-        console.log("Senha:", password);
-        alert("Login realizado com sucesso!");
-    };
+        console.log("Email:", email)
+        console.log("Senha:", password)
+    }
 
     return (
         <div>
             <form>
+                <p>Quantidade de caracteres no email: {emailLength}</p>
                 <label>
                     <span>Email</span>
                     <input
