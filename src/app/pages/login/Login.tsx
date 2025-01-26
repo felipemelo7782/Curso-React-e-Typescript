@@ -3,11 +3,16 @@
 //history.push('/pagina')
 //import { useNavigate } from "react-router-dom";// versão 6 ou superior
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useContext, useMemo, useRef, useState } from "react";
 import { InputLogin } from "./components/InputLogin";
+import { ButtonLogin } from "./components/ButtonLogin";
+
+import { UsuarioLogadoContext } from "../../shared/contexts";
 
 export const Login = () => {
-    //const inputPasswordRef = useRef<HTMLInputElement>(null);
+    const inputPasswordRef = useRef<HTMLInputElement>(null);
+
+    const { nomeDoUsuario } = useContext(UsuarioLogadoContext);
 
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -24,41 +29,34 @@ export const Login = () => {
 
         }, [email, password]);
 
-
-
     return (
         <div>
             <form>
                 <p>Quantidade de caracteres no email: {emailLength}</p>
+                <p>{nomeDoUsuario}</p>
 
                 <InputLogin
                     label="Email"
                     value={email}
                     onChange={newValue => setEmail(newValue)}
-                    // onPressEnter={() => inputPasswordRef.current?.focus()}
+                    onPressEnter={() => inputPasswordRef.current?.focus()}
                 />
 
                 <InputLogin
-                    label="Password"
+                    label="Senha"
                     type="password"
                     value={password}
+                    ref={inputPasswordRef}
                     onChange={newValue => setPassword(newValue)}
                 />
 
-                {/* <label>
-                    <span>Senha</span>
-                    <input
-                        ref={inputPasswordRef}
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Digite sua senha"
-                    />
-                </label> */}
-
-                <button type="button" onClick={handleEntrar}>
+                {/* <button type="button" onClick={handleEntrar}>
                     Entrar
-                </button>
+                </button> */}
+                <ButtonLogin
+                    type="button" onClick={handleEntrar}>
+                    Entrar</ButtonLogin>
+
             </form>
         </div>
     );
