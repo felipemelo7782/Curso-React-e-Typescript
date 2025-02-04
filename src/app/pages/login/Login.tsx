@@ -3,16 +3,16 @@
 //history.push('/pagina')
 //import { useNavigate } from "react-router-dom";// versão 6 ou superior
 
-import { useCallback, useContext, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { InputLogin } from "./components/InputLogin";
 import { ButtonLogin } from "./components/ButtonLogin";
 
-import { UsuarioLogadoContext } from "../../shared/contexts";
+import { useUsuarioLogado } from "../../shared/hooks";
 
 export const Login = () => {
     const inputPasswordRef = useRef<HTMLInputElement>(null);
 
-    const { nomeDoUsuario } = useContext(UsuarioLogadoContext);
+    const { nomeDoUsuario } = useUsuarioLogado();
 
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
