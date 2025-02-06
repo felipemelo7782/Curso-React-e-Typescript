@@ -65,6 +65,35 @@ export const Dashboard = () => {
 
     }, [lista]);
 
+    const handleDelete = useCallback((id: number) => {
+
+        TarefasService.deleteById(id)
+            .then((result) => {
+                if (result instanceof ApiExeption) {
+                    alert(result.message);
+                } else {
+                    setLista(oldLista => {
+                        return oldLista.filter(oldlisItem => oldlisItem.id !== id);
+                    });
+                }
+            });
+
+    }, []);
+
+    const handleGetById = useCallback((id: number) => {
+        TarefasService.getByiD(id)
+            .then((result) => {
+                if (result instanceof ApiExeption) {
+                    alert(result.message);
+                } else {
+                    setLista(oldLista => {
+                        return oldLista.filter(oldlisItem => oldlisItem.id === id);
+                    });
+                }
+            });
+
+    }, [lista]);
+
     return (
         <div>
             <p>Lista</p>
@@ -81,12 +110,12 @@ export const Dashboard = () => {
                         <input
                             type="checkbox"
                             checked={lisItem.isCompleted}
-                            onChange={() => {
-                                handleToggleComplete(lisItem.id)
-                            }}
+                            onChange={() => handleToggleComplete(lisItem.id) } 
                         />
                         {lisItem.title}
-
+                        <button onClick={() => handleDelete(lisItem.id) } >Apagar</button>
+                        <br/>
+                        <button onClick={() => handleGetById(lisItem.id) } >Select</button>
                     </li>;
                 })}
             </ul>
