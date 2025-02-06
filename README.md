@@ -50,4 +50,20 @@ export default tseslint.config({
   },
 });
 ```
+Substitua tseslint.configs.recommended por tseslint.configs.recommendedTypeChecked ou tseslint.configs.strictTypeChecked.
+Opcionalmente, adicione ...tseslint.configs.stylisticTypeChecked.
+Instale o eslint-plugin-react e atualize a configuração:
+```sh
+import react from 'eslint-plugin-react';
 
+export default tseslint.config({
+  settings: { react: { version: '18.3' } },
+  plugins: { react },
+  rules: {
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+});
+```
+
+Feito com ❤️ por **[Felipe Melo](https://github.com/felipemelo7782)** 
