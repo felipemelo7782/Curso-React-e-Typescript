@@ -1,6 +1,14 @@
 # React + TypeScript + Vite
 
-## Sobre o Projeto
+## Sobre o Projeto:
+
+Projeto Dedicado a Estudos em React + TypeScript do curso de react do  **[Lucas Souza Dev](https://github.com/lvsouza)** no Youtube. 
+
+##Playlist do Youtube
+**[Curso de React com Typescript](https://youtube.com/playlist?list=PL29TaWXah3iZktD5o1IHbc7JDqG_80iOm&si=inn5Sv_K4NoqyHCO)**
+
+qual ele usa o **[Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)** mas eu optei por usar tambem o **[Vite](https://vite.dev)** por sua praticidade de criação e ser mais leve aparentemente.
+
 
 Este repositório foi criado para fornecer uma configuração inicial minimalista para quem deseja desenvolver aplicações React utilizando TypeScript e Vite. Ele já vem configurado com suporte a Hot Module Replacement (HMR) e algumas regras básicas do ESLint.
 
