@@ -8,13 +8,13 @@ export const Dashboard = () => {
 
     useEffect(() => {
         TarefasService.getAll()
-        .then((result) => {
-            if (result instanceof ApiExeption) {
-                alert(result.message);
-            } else {
-                setLista(result);
-            }
-        });
+            .then((result) => {
+                if (result instanceof ApiExeption) {
+                    alert(result.message);
+                } else {
+                    setLista(result);
+                }
+            });
     }, []);
 
     const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback((e) => {
@@ -25,19 +25,45 @@ export const Dashboard = () => {
 
             e.currentTarget.value = '';
 
-            setLista((oldLista) => {
-                if (oldLista.some((listItem) => listItem.title === value)) return oldLista;
-                return [...oldLista,
-                {
-                    id: oldLista.length,
-                    title: value,
-                    isCompleted: false,
-                }];
-            });
+            if (lista.some((listItem) => listItem.title === value)) return;
+
+            TarefasService.create({ title: value, isCompleted: false })
+                .then((result) => {
+                    if (result instanceof ApiExeption) {
+                        alert(result.message);
+                    } else {
+                        setLista((oldLista) => [...oldLista, result]);
+                    }
+                });
+
+
 
         }
 
-    }, []);
+    }, [lista]);
+
+    const handleToggleComplete = useCallback((id: number) => {
+        const tarefaToUpdate = lista.find((tarefa) => tarefa.id === id);
+        if (!tarefaToUpdate) return;
+
+        TarefasService.updateById(id, {
+            ...tarefaToUpdate,
+            isCompleted: !tarefaToUpdate.isCompleted
+        })
+            .then((result) => {
+                if (result instanceof ApiExeption) {
+                    alert(result.message);
+                } else {
+                    setLista(oldLista => {
+                        return oldLista.map(oldlisItem => {
+                            if (oldlisItem.id === id) return result;
+                            return oldlisItem;
+                        });
+                    });
+                }
+            });
+
+    }, [lista]);
 
     return (
         <div>
@@ -56,18 +82,7 @@ export const Dashboard = () => {
                             type="checkbox"
                             checked={lisItem.isCompleted}
                             onChange={() => {
-                                setLista(oldLista => {
-                                    return oldLista.map(oldlisItem => {
-                                        const newisCompleted = oldlisItem.title === lisItem.title
-                                        ? !oldlisItem.isCompleted 
-                                        : oldlisItem.isCompleted;
-
-                                        return {
-                                            ...oldlisItem,
-                                            isCompleted: newisCompleted
-                                        }
-                                    });
-                                });
+                                handleToggleComplete(lisItem.id)
                             }}
                         />
                         {lisItem.title}

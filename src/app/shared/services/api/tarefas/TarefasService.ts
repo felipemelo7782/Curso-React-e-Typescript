@@ -31,7 +31,7 @@ const create = async (dataToCreate: Omit<ITarefa, 'id'>): Promise<ITarefa | ApiE
         return new ApiExeption(error.message || 'Erro ao criar o registro.');
     }
 };
-const updateById = async (id: string, dataToUpdate: ITarefa): Promise<ITarefa | ApiExeption> => { 
+const updateById = async (id: number, dataToUpdate: ITarefa): Promise<ITarefa | ApiExeption> => { 
     try{
         const { data } = await Api().put(`/tarefas/${id}`,dataToUpdate);
         return data;
@@ -39,7 +39,7 @@ const updateById = async (id: string, dataToUpdate: ITarefa): Promise<ITarefa | 
         return new ApiExeption(error.message || 'Erro ao atualizar o registro.');
     }
 };
-const deleteById = async (id: string): Promise<undefined | ApiExeption> => { 
+const deleteById = async (id: number): Promise<undefined | ApiExeption> => { 
     try{
         await Api().delete(`/tarefas/${id}`);
         return undefined;
